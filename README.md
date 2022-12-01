@@ -1,3 +1,5 @@
-It is linked to the react-perspective-cropper package in the parent directory for development purposes.
+Download the code.
 
-You can run `yarn install` and then `yarn start` to test your package.
+And instanly `yarn start` to see app.
+
+To easy trying, you can access the app on this link [https://scan-photo.vercel.app/](https://scan-photo.vercel.app/)
