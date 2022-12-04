@@ -8,6 +8,7 @@ import "./App.css";
 const Scanner = ({ data, setData, img, setImg, id, done, setDone }) => {
   const [cropState, setCropState] = useState();
   const [title, setTitle] = useState();
+  const [result, setResult] = useState();
   const cropperRef = useRef();
 
   const onDragStop = useCallback((s) => setCropState(s), []);
@@ -35,7 +36,6 @@ const Scanner = ({ data, setData, img, setImg, id, done, setDone }) => {
   }, [id]);
 
   const doSomething = async () => {
-    console.log("CropState", cropState);
     try {
       const res = await cropperRef.current.done({
         preview: true,
@@ -44,12 +44,15 @@ const Scanner = ({ data, setData, img, setImg, id, done, setDone }) => {
           thMode: window.cv.ADAPTIVE_THRESH_GAUSSIAN_C,
         },
       });
-      setData([...data, { title: title, photo: URL.createObjectURL(res) }]);
-      setDone([...done, id]);
-      setImg(undefined);
+      setResult(res);
     } catch (e) {
       console.log("error", e);
     }
+  };
+  const Save = () => {
+    setData([...data, { title: title, photo: URL.createObjectURL(result) }]);
+    setDone([...done, id]);
+    setImg(undefined);
   };
 
   return (
@@ -65,6 +68,9 @@ const Scanner = ({ data, setData, img, setImg, id, done, setDone }) => {
             }}
           >
             Back
+          </Button>
+          <Button onClick={Save} icon={<CheckOutlined />}>
+            Save
           </Button>
         </div>
       )}
